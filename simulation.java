@@ -28,7 +28,7 @@ public class simulation{
     static Double vyi = 3.0;
     static Double vzi = 18.0;
     static Double dt = 0.01;
-    static Double wxi = 0.2;
+    static Double wxi = 0.5;
     static Double wyi = 0.2;
     static Double wzi = 0.2;
     
@@ -50,14 +50,17 @@ public class simulation{
 
         // double test = 0;
         fw.write(time + " " + x.toString() + " " + y.toString() + " " + z.toString() + "\n");
-        System.out.println(a);
+        double ymax = 0;
         double max = 0;
+        double yf = 0;
         while(z>=0){
             time += dt;
             max = Math.max(y, max);
             x += prevx*dt;
+            yf = y;
             y += prevy*dt;
             z += prevz*dt;
+            ymax = Math.max(y, ymax);
             fw.write(time + " " + x.toString() + " " + y.toString() + " " + z.toString() + "\n");
             prevy = yvel(prevx, prevz, prevy, dt, prevwx, prevwz, prevwy);
             prevx = xvel(prevx, dt);
@@ -67,6 +70,7 @@ public class simulation{
             prevwx = angvx(prevwx, dt);
             prevwz = angvz(prevwz, dt);
         }
+        System.out.println("Curve: "+ (2*ymax - (yf)));
         
         fw.close();
     }
